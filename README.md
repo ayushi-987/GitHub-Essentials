@@ -11,4 +11,4 @@ Automates the cleanup of stale branches and PRs in GitHub repositories.
 ### Usage
 Run the script with your GitHub token and desired action:
 ```bash
-python cleanup.py
+python GitClean.py
