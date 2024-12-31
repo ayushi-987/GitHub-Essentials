@@ -180,10 +180,10 @@ def close_old_prs(repo, days=30):
 
         if latest_commit_date and latest_commit_date < cutoff_date:
             print(f"Closing PR #{pr['number']} titled '{pr['title']}' with latest commit on {latest_commit_date}")
-            #close_pr(repo, pr['number'])
+            close_pr(repo, pr['number'])
         elif not latest_commit_date:
             print(f"No commits found for PR #{pr['number']}. Closing it.")
-            #close_pr(repo, pr['number'])
+            close_pr(repo, pr['number'])
 
 def close_pr(repo, pr_number):
     """Close a pull request by number."""
@@ -197,13 +197,11 @@ def close_pr(repo, pr_number):
         print(f"Error closing PR #{pr_number}: {response.status_code} - {response.json().get('message', '')}")
 
 if __name__ == "__main__":
-    #print(f"script start")
     repos = get_all_repositories()
-    #print(f"reepoooo {repos}")
     for repo in repos:
         print(f"Processing repository: {repo}")
-        #active_branches, inactive_branches = get_branches(repo, days=90)
-        #for branch in inactive_branches:
-            #print(f"Deleting branch: {branch['name']} in repository: {repo}")
-            #delete_branch(repo, branch['name'])
+        active_branches, inactive_branches = get_branches(repo, days=90)
+        for branch in inactive_branches:
+            print(f"Deleting branch: {branch['name']} in repository: {repo}")
+            delete_branch(repo, branch['name'])
         close_old_prs(repo, days=30)
